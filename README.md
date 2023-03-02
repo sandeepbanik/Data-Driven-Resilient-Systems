@@ -12,37 +12,45 @@ Clone or download the repository into your local drive for running the project f
 The following are the inputs to the FlipDyn class.
 
 F - State transition matrix.
+
 B - Control matrix when the defender is in control.
+
 E - Control matrix when the adversary is in control.
+
 K - Linear state feedback gain when the defender is in control.
+
 W - Linear state feedback gain when the adversary is in control.
+
 L - Horizon length of the FlipDyn game. 
+
 Q - State cost.
+
 D - Defender's takeover cost.
+
 A - Adversary's takeover cost.
 
 If you wish to simulate the system once the FlipDyn game is solved, you can provide the following inputs. 
 
 itr - Number of iteration for simulating the system.
+
 x0 - Initial state of the system.
 
 ## Main Scripts:
 
 Two main scripts are provided. One for a scalar system and the other for an n-dimensional system. Namely,
-
-''FlipDyn_test_1_dim.m'' - Scalar system script.
-''FlipDyn_test_n_dim.m'' - N-dimensional system script.
+``FlipDyn_test_1_dim.m`` - Scalar system script.
+``FlipDyn_test_n_dim.m`` - N-dimensional system script.
 
 The FlipDyn system class can be added by using,
 
-''addpath('Flip_DYN')''
+``addpath('Flip_DYN')``
 
 ## Class files:
 
-''FlipDyn.m'' - FlipDyn class file.
-''FlipDyn_LS.m'' - FlipDyn solver for scalar system.
-''FlipDyn_NS.m'' - FlipDyn solver for n-dimensional system.
-''simulate_sys.m'' - Simulating the system.
+``FlipDyn.m`` - FlipDyn class file.
+``FlipDyn_LS.m`` - FlipDyn solver for scalar system.
+``FlipDyn_NS.m`` - FlipDyn solver for n-dimensional system.
+``simulate_sys.m`` - Simulating the system.
 
 ## Illustration
 
