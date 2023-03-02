@@ -38,8 +38,9 @@ x0 - Initial state of the system.
 ## Main Scripts:
 
 Two main scripts are provided. One for a scalar system and the other for an n-dimensional system. Namely,
-``FlipDyn_test_1_dim.m`` - Scalar system script.
-``FlipDyn_test_n_dim.m`` - N-dimensional system script.
+*``FlipDyn_test_1_dim.m`` - Scalar system script.
+*``FlipDyn_test_n_dim.m`` - N-dimensional system script.
+
 
 The FlipDyn system class can be added by using,
 
