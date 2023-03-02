@@ -44,9 +44,9 @@ The FlipDyn system class can be added by using,
 ''FlipDyn_NS.m'' - FlipDyn solver for n-dimensional system.
 ''simulate_sys.m'' - Simulating the system.
 
-# Illustration
+## Illustration
 
-![Intro](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide1_v2.png)
+![Intro ](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide1_v2.png)
 
 ![Slide 2](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide2.PNG)
 
