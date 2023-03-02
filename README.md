@@ -50,13 +50,13 @@ The FlipDyn system class can be added by using,
 
 ![Slide 2](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide2.PNG)
 
-![Slide 3](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide3.PNG)
+![Slide 3](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide3.PNG)
 
-![Slide 4](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide4.PNG)
+![Slide 4](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide4.PNG)
 
-![Slide 5](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide5.PNG)
+![Slide 5](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide5.PNG)
 
-![Slide 6](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide6.PNG)
+![Slide 6](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/blob/main/Flip_DYN/Github_readme/Slide6.PNG)
 
 ## Citing
 
