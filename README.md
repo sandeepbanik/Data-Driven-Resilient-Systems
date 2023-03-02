@@ -46,7 +46,7 @@ The FlipDyn system class can be added by using,
 
 ## Illustration
 
-![Slide 1](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide1.PNG)
+![Intro](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide1.png)
 
 ![Slide 2](https://github.com/sandeepbanik/Data-Driven-Resilient-Systems/tree/main/Flip_DYN/Github_readme/Slide2.PNG)
 
