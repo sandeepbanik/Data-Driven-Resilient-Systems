@@ -1,4 +1,11 @@
 function [P_0,P_1,gamma] = FlipDyn_NS(cs)
+% FlipDyn_NS solves the FlipDyn game for a scalar system with
+% the parameters sepcified in the FlipDyn class. 
+% [P_0,P_1,gamma] = FlipDyn_NS(FD) 
+% FD is the FlipDyn class with the required properties.
+% P_0 - value function parameter p0, n by n matrix (alpha = 0).
+% P_1 - value function parameter p0, n by n matrix (alpha = 0).
+% gamma - value function parameter constant mu.
 %% Parameters
 F = cs.F;   % System dynamics
 B = cs.B;   % Control matrix

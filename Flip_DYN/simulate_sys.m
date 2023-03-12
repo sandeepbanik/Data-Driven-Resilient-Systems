@@ -1,4 +1,13 @@
 function [traj_str,obj_str,def_pol,att_pol] = simulate_sys(cs)
+% simulate_sys simulates the FlipDyn game after solving for the value function parameters p0 and p1. 
+% FD = FlipDyn(F,B,E,K,W,L,Q,D,A,x0,itr) 
+% [traj_str,obj_str,def_pol,att_pol] = simulate_sys(FD) simulates the
+% system.
+% FD is the FlipDyn class with the required properties.
+% traj_str - Stored trajectories (itr number of trajectories).
+% obj_str - Objective function for the corresponding trajectories.
+% def_pol - Defender policy corresponding to alpha = 0.
+% att_pol - Adversary policy corresponding to alpha = 0.
 %% Parameters
 F = cs.F;   % System dynamics
 B = cs.B;   % Control matrix

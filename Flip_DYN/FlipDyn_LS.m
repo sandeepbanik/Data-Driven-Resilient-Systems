@@ -1,4 +1,15 @@
 function [p0_f,p1_f,def_pol_p0,def_pol_p1,adv_pol_p0,adv_pol_p1,gamma] = FlipDyn_LS(cs)
+% FlipDyn_LS solves the FlipDyn game for a scalar system with
+% the parameters sepcified in the FlipDyn class. 
+% [p0_f,p1_f,def_pol_p0,def_pol_p1,adv_pol_p0,adv_pol_p1,gamma] = FlipDyn_LS(FD) 
+% FD is the FlipDyn class with the required properties.
+% p0_f - value function parameter p0 (alpha = 0).
+% p1_f - value function parameter p0 (alpha = 0).
+% def_pol_p0 - Defender policy corresponding to alpha = 0.
+% def_pol_p1 - Defender policy corresponding to alpha = 1.
+% adv_pol_p0 - Adversary policy corresponding to alpha = 0.
+% adv_pol_p1 - Adversary policy corresponding to alpha = 1.
+% gamma - value function parameter constant mu.
 %% Parameters
 F = cs.F;   % System dynamics
 B = cs.B;   % Control matrix
