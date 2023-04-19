@@ -11,9 +11,9 @@ addpath('Flip_DYN');
 
 % Sample time.
 dt = 0.1;
-
+f = 0.85;
 % State transition matrix.
-F = [1.01 dt;0 1.01];
+F = [f dt;0 f];
 
 % Control matrix.
 B = [dt^2/2;dt];
@@ -44,22 +44,24 @@ W = 0;
 E = B;
 
 % Horizon length.
-L = 25;
+L = 100;
 
-% Build the FlipDyn class.
-FD = FlipDyn(F,B,E,K,W,L);
+% Defender State cost.
+Q_d = Q;
 
-% State cost.
-FD.Q = Q;
+% Adversary State cost.
+Q_a = 2*eye(n);
 
 % Defender's takeover cost.
-FD.D = 0.5*eye(n);
-FD.D = rand(1)*eye(n);
+D = 0.5*eye(n);
+% D = rand(1)*eye(n);
 
 % Adversary's takeover cost.
-FD.A = 1.0*eye(n);
-FD.A = rand(1)*eye(n);
+A = 0.5*eye(n);
+% A = rand(1)*eye(n);
 
+% Build the FlipDyn class.
+FD = FlipDyn(F,B,E,K,W,L,Q_d,Q_a,D,A);
 
 %% Solve.
 
@@ -69,7 +71,7 @@ FD.n_solve;
 %% Simulate the system.
 
 % Number of iterations for simulation.
-FD.itr  = 10;
+FD.itr = 100;
 
 % Initial state.
 x0 = rand(n,1);

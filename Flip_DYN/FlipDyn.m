@@ -7,13 +7,14 @@ classdef FlipDyn < dynamicprops
         W % Adversary feedback law
         D % Defender cost matrix
         A % Adversary cost matrix
-        Q % State cost matrix
+        Q_d % Defender State cost matrix
+        Q_a % Adversary State cost matrix
         L % Time horizon
         x0 % Initial state for simulation (Optional)
         itr % Number of iterations (for simulating the system).
     end
     methods
-        function cs = FlipDyn(F,B,E,K,W,L,Q,D,A,x0,itr)
+        function cs = FlipDyn(F,B,E,K,W,L,Q_d,Q_a,D,A,x0,itr)
             %
             % FLIPDYN class file.
             % FD = FlipDyn(F,B,E,K,W,L,Q,D,A,x0,itr) creates a class with
@@ -39,7 +40,8 @@ classdef FlipDyn < dynamicprops
                 K double
                 W double
                 L double
-                Q double
+                Q_d double
+                Q_a double
                 D double
                 A double
                 x0 {mustBeNonempty} = false;
@@ -52,7 +54,8 @@ classdef FlipDyn < dynamicprops
                 cs.K = K;
                 cs.W = W;
                 cs.L = L;
-                cs.Q = Q;
+                cs.Q_d = Q_d;
+                cs.Q_a = Q_a;
                 cs.D = D;
                 cs.A = A;
                 if x0

@@ -7,15 +7,16 @@ function [P_0,P_1,gamma] = FlipDyn_NS(cs)
 % P_1 - value function parameter p0, n by n matrix (alpha = 0).
 % gamma - value function parameter constant mu.
 %% Parameters
-F = cs.F;   % System dynamics
-B = cs.B;   % Control matrix
-E = cs.E;   % Adversary control matrix
-K = cs.K;   % Defender feedback law
-W = cs.W;   % Adversary feedback law
-L = cs.L;   % Time horizon
-D = cs.D;   % Defender cost matrix
-A = cs.A;   % Adversary cost matrix
-Q = cs.Q;   % State cost matrix
+F = cs.F;       % System dynamics
+B = cs.B;       % Control matrix
+E = cs.E;       % Adversary control matrix
+K = cs.K;       % Defender feedback law
+W = cs.W;       % Adversary feedback law
+L = cs.L;       % Time horizon
+D = cs.D;       % Defender cost matrix
+A = cs.A;       % Adversary cost matrix
+Q_d = cs.Q_d;   % Defender State cost matrix
+Q_a = cs.Q_a;   % Adversary State cost matrix
 
 %% Checking initial conditions
 
@@ -40,13 +41,13 @@ n = size(A,1);
 P_0 = zeros(n,n,L+1);
 
 % Boundary condition.
-P_0(:,:,end) = Q;
+P_0(:,:,end) = Q_d;
 
 % Value function matrix for alpha = 1.
 P_1 = zeros(n,n,L+1);
 
 % Boundary condition.
-P_1(:,:,end) = Q + max(A,D);
+P_1(:,:,end) = Q_a;
 
 % Flag for mixed policy condition not satisfied.
 flag_mp_cond = 0;
@@ -67,9 +68,9 @@ for i=L:-1:1
     % Checking the mixed policy condition at stage i for alpha = 0.
     if all(m_cond >= 0 )
         % Update the value function for alpha = 0.
-        P_0(:,:,i) = Q + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
+        P_0(:,:,i) = Q_d + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
         % Update the value function for alpha = 1.
-        P_1(:,:,i) = Q - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
+        P_1(:,:,i) = Q_a - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
     else
         % Update the mixed policy condition (not satisfied).
         flag_mp_cond = 1;
@@ -77,9 +78,9 @@ for i=L:-1:1
         % satisfied.
         stage_mp_cond = i;
         % Update the value function for alpha = 0.
-        P_0(:,:,i) = Q + til_D'*P_0(:,:,i+1)*til_D ;
+        P_0(:,:,i) = Q_d + til_D'*P_0(:,:,i+1)*til_D ;
         % Update the value function for alpha = 1.
-        P_1(:,:,i) = Q + til_W'*P_1(:,:,i+1)*til_W;
+        P_1(:,:,i) = Q_a + til_W'*P_1(:,:,i+1)*til_W;
     end
 end
 
@@ -99,6 +100,8 @@ if flag_mp_cond == 1
     ub_c = 0.01;
     lb_c = 0;
     
+    % Old Q_a
+    Q_a_old = Q_a;
     
     % Boundary condition.
     gamma =  ub_c;
@@ -116,14 +119,15 @@ if flag_mp_cond == 1
         P_0 = zeros(n,n,L+1);
         
         % Boundary condition.
-        P_0(:,:,end) = Q;
+        P_0(:,:,end) = Q_d;
         
         % Value function matrix for alpha = 1.
         P_1 = zeros(n,n,L+1);
         
+        % Increment Q_a
+        Q_a = Q_a_old + gamma*eye(n);
         % Boundary condition.
-        P_1(:,:,end) = Q + max(A,D) + gamma*eye(n);
-        
+        P_1(:,:,end) = Q_a;
         
         for i=L:-1:1
             % P tilde
@@ -133,9 +137,9 @@ if flag_mp_cond == 1
             
             if all(m_cond >= 0 )
                 % Update the value function for alpha = 0.
-                P_0(:,:,i) = Q + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
+                P_0(:,:,i) = Q_d + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
                 % Update the value function for alpha = 1.
-                P_1(:,:,i) = Q - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
+                P_1(:,:,i) = Q_a - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
                 if i==1
                     if flag_lb == 1
                         % Cut the upper bound.
@@ -152,9 +156,9 @@ if flag_mp_cond == 1
                 end
             else
                 % Update the value function for alpha = 0.
-                P_0(:,:,i) = Q + til_D'*P_0(:,:,i+1)*til_D ;
+                P_0(:,:,i) = Q_d + til_D'*P_0(:,:,i+1)*til_D ;
                 % Update the value function for alpha = 1.
-                P_1(:,:,i) = Q + til_W'*P_1(:,:,i+1)*til_W;
+                P_1(:,:,i) = Q_a + til_W'*P_1(:,:,i+1)*til_W;
                 if flag_lb == 0
                     % Increment the lower bound.
                     lb_c = ub_c;
@@ -183,13 +187,16 @@ if flag_mp_cond == 1
     P_0 = zeros(n,n,L+1);
     
     % Boundary condition.
-    P_0(:,:,end) = Q;
+    P_0(:,:,end) = Q_d;
     
     % Value function matrix for alpha = 1.
     P_1 = zeros(n,n,L+1);
     
     % Boundary condition.
-    P_1(:,:,end) = Q + max(A,D) + gamma*eye(n);
+    P_1(:,:,end) = Q_a;
+    
+    % Update Q_a
+    cs.Q_a = Q_a;
     
     % Loop over L stages
     for i=L:-1:1
@@ -201,14 +208,14 @@ if flag_mp_cond == 1
         % Checking the mixed policy condition at stage i for alpha = 0.
         if all(m_cond >= 0 )
             % Update the value function for alpha = 0.
-            P_0(:,:,i) = Q + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
+            P_0(:,:,i) = Q_d + D + til_D'*P_0(:,:,i+1)*til_D - (D/(P_til))*A;
             % Update the value function for alpha = 1.
-            P_1(:,:,i) = Q - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
+            P_1(:,:,i) = Q_a - A + til_W'*P_1(:,:,i+1)*til_W + (D/(P_til))*A;
         else
             % Update the value function for alpha = 0.
-            P_0(:,:,i) = Q + til_D'*P_0(:,:,i+1)*til_D ;
+            P_0(:,:,i) = Q_d + til_D'*P_0(:,:,i+1)*til_D ;
             % Update the value function for alpha = 1.
-            P_1(:,:,i) = Q + til_W'*P_1(:,:,i+1)*til_W;
+            P_1(:,:,i) = Q_a + til_W'*P_1(:,:,i+1)*til_W;
         end
     end
 end

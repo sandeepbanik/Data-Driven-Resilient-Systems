@@ -17,7 +17,8 @@ W = cs.W;   % Adversary feedback law
 L = cs.L;   % Time horizon
 D = cs.D;   % Defender cost matrix
 A = cs.A;   % Adversary cost matrix
-Q = cs.Q;   % State cost matrix
+Q_d = cs.Q_d;   % Defender State cost matrix
+Q_a = cs.Q_a;   % Adversary State cost matrix
 % x0 - Initial state.
 x0 = cs.x0;
 % Parameters of the value function for alpha = 0.
@@ -47,7 +48,6 @@ traj_str = zeros(n,L+1,itr_s);
 % Initialize the state.
 x_init = x0;
 
-
 % Objective function.
 obj_str = zeros(L+1,itr_s);
 
@@ -68,10 +68,8 @@ for it_s = 1:itr_s
     
     % Iterate over the horizon
     for time=1:L
-        fprintf('Time %d\n',time);
-        if time == 24
-            disp('hold');
-        end
+%         fprintf('Time %d\n',time);
+        
         % Value function difference.
         if n > 1
             P1_temp = P_1_str(:,:,time+1);
@@ -94,9 +92,9 @@ for it_s = 1:itr_s
         def_pol(:,time,it_s) = def_p_m;
         att_pol(:,time,it_s) = att_p_m;
         
-%         if sum(def_p_m)~=1 || sum(att_p_m)~=1
-% %             disp('Hold');
-%         end
+        if (sum(def_p_m) - 1) > 1e-4 || (sum(att_p_m) - 1) > 1e-4
+           disp('hold'); 
+        end
         %%%%%%%%%%%%%%%%%%%%%%
         % Alpha = 0.
         %%%%%%%%%%%%%%%%%%%%%%
@@ -157,9 +155,10 @@ for it_s = 1:itr_s
             x_str_local(:,time+1) = til_W*x_str_local(:,time);
         end
         % Store objective.
-        obj_str(time,it_s) = x_str_local(:,time)'*Q*x_str_local(:,time) +...
-                        (1 - F_s(time,it_s))*x_str_local(:,time)'*D*x_str_local(:,time) - ...
-                        mu*F_s(time,it_s)*x_str_local(:,time)'*A*x_str_local(:,time);
+        obj_str(time,it_s) = (1-F_s(time,it_s))*x_str_local(:,time)'*Q_d*x_str_local(:,time) +...
+                        F_s(time,it_s)*x_str_local(:,time)'*Q_a*x_str_local(:,time) + ...
+                        def_p*x_str_local(:,time)'*D*x_str_local(:,time) - ...
+                        mu*att_p*x_str_local(:,time)'*A*x_str_local(:,time);
         % Update the FlipDyn state.
         F_s(time+1,it_s) = ((1-def_p)*(1-att_p) + def_p*att_p)*F_s(time,it_s) + (1-def_p)*(def_p + att_p);
     end
